@@ -9,17 +9,70 @@
         android:id="@+id/nav_home"
         android:name="com.pucmm.proyecto_final.ui.home.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_gallery"
+            app:destination="@id/nav_product" />
+        <action
+            android:id="@+id/action_nav_home_to_nav_slideshow"
+            app:destination="@id/nav_category" />
+    </fragment>
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.pucmm.proyecto_final.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_product"
+        android:name="com.pucmm.proyecto_final.ui.product.ProductFragment"
+        android:label="Product"
+        tools:layout="@layout/fragment_product" >
+        <action
+            android:id="@+id/action_nav_gallery_to_nav_home"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_nav_product_to_nav_product_form"
+            app:destination="@id/nav_product_form" />
+        <action
+            android:id="@+id/action_nav_product_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+    </fragment>
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.pucmm.proyecto_final.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_category"
+        android:name="com.pucmm.proyecto_final.ui.category.CategoryFragment"
+        android:label="Category"
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_nav_slideshow_to_nav_home"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_nav_category_to_nav_product"
+            app:destination="@id/nav_product" />
+        <action
+            android:id="@+id/action_nav_category_to_nav_category_form"
+            app:destination="@id/nav_category_form" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_product_form"
+        android:name="com.pucmm.proyecto_final.ui.product.ProductFormFragment"
+        android:label="Product Form"
+        tools:layout="@layout/fragment_product_form">
+        <action
+            android:id="@+id/action_nav_product_form_to_nav_product"
+            app:destination="@id/nav_product" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_category_form"
+        android:name="com.pucmm.proyecto_final.ui.category.CategoryFormFragment"
+        android:label="Category Form"
+        tools:layout="@layout/fragment_category_form">
+        <action
+            android:id="@+id/action_categoryForm_to_nav_category"
+            app:destination="@id/nav_category" />
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailsFragment"
+        android:name="com.pucmm.proyecto_final.ui.product.ProductDetailsFragment"
+        android:label="Product Detail">
+        <action
+            android:id="@+id/action_productDetailsFragment_to_nav_product"
+            app:destination="@id/nav_product" />
+    </fragment>
 </navigation>

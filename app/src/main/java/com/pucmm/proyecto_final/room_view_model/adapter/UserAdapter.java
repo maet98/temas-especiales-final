@@ -8,9 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.pucmm.proyecto_final.room_view_model.model.User;
+import com.pucmm.proyecto_final.models.User;
 
-import java.util.ConcurrentModificationException;
 import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> {

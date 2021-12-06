@@ -1,5 +1,10 @@
 <resources>
-    <string name="app_name">proyecto_final</string>
+    <string name="app_name">E-Commerce</string>
+    <string name="action_search">Search</string>
+    <string name="action_notification">Notifications</string>
+    <string name="action_cart">Cart</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_logout">Log out</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Enter Email</string>
     <string name="prompt_password">Enter Password</string>
@@ -15,12 +20,13 @@
     <string name="register">Register Now</string>
     <string name="action_sign_up">Register</string>
     <string name="enter_name">Enter Name</string>
-    <string name="user">Enter User</string>
+    <string name="firstName">Enter firstname</string>
+    <string name="lastName">Enter lastname</string>
     <string name="email">Enter email</string>
     <string name="confirm_password">Confirm password</string>
     <string name="contact">Enter contact</string>
     <string name="ecommerce">E-Commerce</string>
-    <string name="getPassword">Get Password</string>
+    <string name="change_password">Change Password</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -35,5 +41,35 @@
     <string name="save_product">Save product</string>
     <string name="description_product">Description...</string>
     <string name="price_product">price</string>
+
+    <string name="prompt_item_code">Enter Item Code</string>
+    <string name="prompt_item_name">Enter Item Name</string>
+    <string name="prompt_category">Category</string>
+    <string name="prompt_is_active">Is Active?</string>
+    <string name="prompt_price">Enter Price</string>
+
+    <string name="btn_select">Select Multiple Images</string>
+    <string name="btn_back">Back</string>
+    <string name="btn_register">Register</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_previous">Previous</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_delete">Delete</string>
+
+    <string name="error_field_required">This field is required!</string>
+
+    <string name="please_wait">Please Wait</string>
+    <string name="authenticating">Authenticating...</string>
+    <string name="connecting">Connecting...</string>
+    <string name="download">Download...</string>
+    <string name="upload">Upload...</string>
+
+    <string-array name="rols">
+        <item>SELECT A ROL</item>
+        <item>SELLER</item>
+        <item>CUSTOMER</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

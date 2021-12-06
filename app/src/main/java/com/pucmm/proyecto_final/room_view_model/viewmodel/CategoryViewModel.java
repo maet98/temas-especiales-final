@@ -5,9 +5,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.pucmm.proyecto_final.room_view_model.database.CategoryDao;
-import com.pucmm.proyecto_final.room_view_model.database.ProductDao;
-import com.pucmm.proyecto_final.room_view_model.model.Category;
-import com.pucmm.proyecto_final.room_view_model.model.Product;
+import com.pucmm.proyecto_final.models.Category;
 
 import java.util.List;
 
