@@ -24,7 +24,7 @@ public class User implements Serializable {
     @SerializedName("password")
     private String password;
     @SerializedName("birthday")
-    private long birthday;
+    private String birthday;
     @SerializedName("photo")
     private String photo;
 
@@ -68,11 +68,11 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
-    public long getBirthday() {
-        return birthday;
+    public String getBirthday() {
+        return this.birthday;
     }
 
-    public void setBirthday(long birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 

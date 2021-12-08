@@ -10,6 +10,7 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -17,11 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.pucmm.proyecto_final.databinding.ActivityMainBinding;
 import com.pucmm.proyecto_final.activities.login.LoginActivity;
+import com.pucmm.proyecto_final.utils.Session;
 
 public class MainActivity extends AppCompatActivity  {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private Session session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,7 @@ public class MainActivity extends AppCompatActivity  {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        session = new Session(this);
 
         setSupportActionBar(binding.appBarMain.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
@@ -36,7 +40,7 @@ public class MainActivity extends AppCompatActivity  {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_category, R.id.nav_product)
+                R.id.nav_home, R.id.nav_category, R.id.nav_product, R.id.nav_profile)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -44,7 +48,7 @@ public class MainActivity extends AppCompatActivity  {
         NavigationUI.setupWithNavController(navigationView, navController);
 
         navigationView.getMenu().findItem(R.id.nav_logout).setOnMenuItemClickListener(item -> {
-//            session.logout();
+            session.logout();
             //After logout redirect user to Login Activity
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             //Staring Login Activity
@@ -83,13 +87,17 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        NavHostFragment navHostFragment =
+                (NavHostFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.nav_host_fragment_content_main);
+        NavController navController = navHostFragment.getNavController();
 
         if (id == R.id.action_search) {
-            return true;
+            navController.navigate(R.id.nav_search_product);
         } else if (id == R.id.action_notifications) {
-            return true;
+            navController.navigate(R.id.nav_notification);
         } else if (id == R.id.action_cart) {
-            return true;
+            navController.navigate(R.id.nav_cart);
         }
 
         return super.onOptionsItemSelected(item);

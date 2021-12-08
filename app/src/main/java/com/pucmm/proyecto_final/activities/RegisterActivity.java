@@ -32,8 +32,10 @@ import com.pucmm.proyecto_final.data.ForgotPassword;
 import com.pucmm.proyecto_final.databinding.ActivityRegisterBinding;
 import com.pucmm.proyecto_final.utils.FirebaseConnection;
 import com.pucmm.proyecto_final.utils.NetResponse;
+import com.pucmm.proyecto_final.utils.ValidUtil;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
 
@@ -44,12 +46,7 @@ import retrofit2.Response;
 public class RegisterActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Uri uri;
-    private TextView firstName;
-    private TextView email;
-    private TextView lastName;
-    private TextView password;
-    private TextView confirm;
-    private TextView contact;
+    private EditText email, firstName, lastName, password, confirm, contact;
     private ApiUser apiUser;
     private Spinner rols;
     private User.ROL selectedRol;
@@ -149,7 +146,16 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
     }
 
     public void register(View view) {
-        if(password.getText().toString().equals(confirm.getText().toString())) {
+        if(ValidUtil.isEmailValid(email, email.getText().toString()) && !ValidUtil.isEmpty(this, firstName, lastName, email, password, confirm) ) {
+            if(!password.getText().toString().equals(confirm.getText().toString())) {
+                Toast.makeText(getApplicationContext(), "Password should match", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if(rols.getSelectedItemPosition() == 0) {
+                ((TextView)rols.getSelectedView()).setError("You must select a rol");
+                return;
+            }
             User user = new User();
             user.setContact(contact.getText().toString());
             user.setEmail(email.getText().toString());
@@ -163,44 +169,65 @@ public class RegisterActivity extends AppCompatActivity implements AdapterView.O
                     @Override
                     public void onResponse(Call<User> call, Response<User> response) {
                         int uid = response.body().getUid();
-                        FirebaseConnection.obtain().upload(uri, String.format("profile/%s.jpg", uid),
-                                new NetResponse<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        user.setUid(uid);
-                                        user.setPhoto(response);
-                                        final Call<User> userUpdateCall = apiUser.changeUser(user);
-                                        userUpdateCall.enqueue(new Callback<User>() {
-                                            @Override
-                                            public void onResponse(Call<User> call, Response<User> response) {
-                                                Toast.makeText(getApplicationContext(), "Your user was registered", Toast.LENGTH_SHORT).show();
-                                                finish();
-                                            }
+                        switch (response.code()) {
+                            case 201:
+                            case 204:
+                                uploadImage(user, uid);
+                                break;
+                            default:
+                                try {
+                                    Toast.makeText(RegisterActivity.this, response.errorBody().string(), Toast.LENGTH_LONG).show();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
 
-                                            @Override
-                                            public void onFailure(Call<User> call, Throwable t) {
-
-                                            }
-                                        });
-                                    }
-
-                                    @Override
-                                    public void onFailure(Throwable t) {
-
-                                    }
-                                });
+                        }
                     }
 
                     @Override
                     public void onFailure(Call<User> call, Throwable t) {
                         System.out.println(t.toString());
+                        Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+
                     }
                 });
             } else {
                 Toast.makeText(getApplicationContext(), "Fill all fields", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private void uploadImage(User user, int uid) {
+        if(uri != null) {
+            FirebaseConnection.obtain().upload(uri, String.format("profile/%s.jpg", uid),
+                    new NetResponse<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            user.setUid(uid);
+                            user.setPhoto(response);
+                            final Call<User> userUpdateCall = apiUser.changeUser(user);
+                            userUpdateCall.enqueue(new Callback<User>() {
+                                @Override
+                                public void onResponse(Call<User> call, Response<User> response) {
+                                    Toast.makeText(getApplicationContext(), "Your user was registered", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+
+                                @Override
+                                public void onFailure(Call<User> call, Throwable t) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t) {
+
+                        }
+                    });
         } else {
-            Toast.makeText(getApplicationContext(), "Password should match", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Your user was registered", Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 

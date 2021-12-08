@@ -31,7 +31,7 @@
             app:destination="@id/nav_product_form" />
         <action
             android:id="@+id/action_nav_product_to_productDetailsFragment"
-            app:destination="@id/productDetailsFragment" />
+            app:destination="@id/nav_detail_product" />
     </fragment>
 
     <fragment
@@ -68,11 +68,38 @@
             app:destination="@id/nav_category" />
     </fragment>
     <fragment
-        android:id="@+id/productDetailsFragment"
+        android:id="@+id/nav_detail_product"
         android:name="com.pucmm.proyecto_final.ui.product.ProductDetailsFragment"
         android:label="Product Detail">
         <action
             android:id="@+id/action_productDetailsFragment_to_nav_product"
             app:destination="@id/nav_product" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_cart"
+        android:name="com.pucmm.proyecto_final.ui.cart.CartFragment"
+        android:label="Cart"
+        tools:layout="@layout/fragment_cart" />
+    <fragment
+        android:id="@+id/nav_notification"
+        android:name="com.pucmm.proyecto_final.ui.NotificationFragment"
+        android:label="Notifications"
+        tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/nav_search_product"
+        android:name="com.pucmm.proyecto_final.ui.product.SearchProductFragment"
+        android:label="Search product"
+        tools:layout="@layout/fragment_search_product" >
+        <action
+            android:id="@+id/action_nav_search_product_to_productDetailsFragment"
+            app:destination="@id/nav_detail_product" />
+        <action
+            android:id="@+id/action_nav_search_product_to_nav_product_form"
+            app:destination="@id/nav_product_form" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.pucmm.proyecto_final.ui.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

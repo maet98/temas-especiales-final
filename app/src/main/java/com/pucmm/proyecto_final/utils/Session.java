@@ -20,7 +20,9 @@ public class Session {
     private static final String PREF_NAME = "session";
     private static final String LOGGED_IN = "isLoggedIn";
     public static final String CARTS = "carts";
+    public static final String NOTIFICATIONS = "notifications";
     private final Type productListType = new TypeToken<ArrayList<ProductCart>>(){}.getType();
+    private final Type notificationListType = new TypeToken<ArrayList<String>>(){}.getType();
 
     public Session(Context context) {
         this.context = context;
@@ -40,6 +42,11 @@ public class Session {
         editor.commit();
     }
 
+    public void updateUser(User user) {
+        editor.putString(USER, new Gson().toJson(user));
+        editor.commit();
+    }
+
     public boolean isLoggedIn() {
         return sharedPreferences.getBoolean(LOGGED_IN, false);
     }
@@ -51,16 +58,46 @@ public class Session {
     }
 
 
-    public void addCart(Product product, int qty) {
-        ProductCart productCart = new ProductCart(product, qty);
-        ArrayList<ProductCart> cart = getCart(sharedPreferences.getString(CARTS, "[]"));
+    public void addCart(Product product, int qty, String photo) {
+        ProductCart productCart = new ProductCart(product, qty, photo);
+        ArrayList<ProductCart> cart = getCart();
         cart.add(productCart);
+        addNotification(productCart.getNotification());
         editor.putString(CARTS, new Gson().toJson(cart));
         editor.commit();
     }
 
-    private ArrayList<ProductCart> getCart(String jsonArrStr) {
+    public void updateProduct(ProductCart product, int position) {
+        ArrayList<ProductCart> productCarts = getCart();
+        productCarts.set(position, product);
+        editor.putString(CARTS, new Gson().toJson(productCarts));
+        editor.commit();
+    }
+
+    public ArrayList<ProductCart> getCart() {
+        String jsonArrStr = sharedPreferences.getString(CARTS, "[]");
         ArrayList<ProductCart> ans = new Gson().fromJson(jsonArrStr, productListType);
         return ans;
+    }
+
+    public void deletedProduct(int position) {
+        ArrayList<ProductCart> productCarts = getCart();
+        productCarts.remove(position);
+        editor.putString(CARTS, new Gson().toJson(productCarts));
+        editor.commit();
+    }
+
+
+    public void addNotification(String notification) {
+        ArrayList<String> notifications = getNotifications();
+        notifications.add(notification);
+        editor.putString(NOTIFICATIONS, new Gson().toJson(notifications));
+        editor.commit();
+    }
+
+
+    public ArrayList<String> getNotifications() {
+        String jsonArrStr = sharedPreferences.getString(NOTIFICATIONS, "[]");
+        return new Gson().fromJson(jsonArrStr, notificationListType);
     }
 }

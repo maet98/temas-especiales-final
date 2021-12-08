@@ -110,7 +110,11 @@ public class ProductDetailsFragment extends Fragment {
         });
 
         binding.action.setOnClickListener(v -> {
-            session.addCart(productWithCarousel.product, Integer.valueOf(binding.qty.getText().toString()));
+            String photo = null;
+            if(!productWithCarousel.carousels.isEmpty()) {
+                photo = productWithCarousel.carousels.get(0).getPhoto();
+            }
+            session.addCart(productWithCarousel.product, Integer.valueOf(binding.qty.getText().toString()), photo);
             Toast.makeText(getContext(), "Product added to cart", Toast.LENGTH_SHORT).show();
         });
 

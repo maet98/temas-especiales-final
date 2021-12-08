@@ -63,7 +63,9 @@ public class ProductFragment extends Fragment {
         View root = binding.getRoot();
 
 
-//        category = (Category) getArgumenVts().getSerializable(Constants.CATEGORY);
+        if(getArguments() != null) {
+            category = (Category) getArguments().getSerializable(Constants.CATEGORY);
+        }
 
 
         binding.addFabProduct.setOnClickListener( v -> {
@@ -113,6 +115,7 @@ public class ProductFragment extends Fragment {
             final Bundle bundle = new Bundle();
             bundle.putSerializable(Constants.PRODUCT_CAROUSEL, element);
             bundle.putSerializable(Constants.USER, user);
+            bundle.putSerializable(Constants.CATEGORY, category);
 
             NavHostFragment.findNavController(ProductFragment.this)
                     .navigate(R.id.action_nav_product_to_productDetailsFragment, bundle);
@@ -127,6 +130,7 @@ public class ProductFragment extends Fragment {
                     ? elements.stream().filter(f -> (f.product.isActive()))
                     : elements.stream();
 
+            System.out.println(category);
             adapter.setProducts(stream.filter(f -> category == null ?
                     true : f.product.getCategory() == category.getId()).collect(Collectors.toList()));
         });
